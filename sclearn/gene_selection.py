@@ -171,7 +171,7 @@ class DEGeneSelector(SelectorMixin, BaseEstimator, metaclass=ABCMeta):
         x1 = X[y == groups[1], :]
 
         # compute adjusted pval
-        statistic, p_val = self.test(x0, x1)
+        p_val = self.test(x0, x1).pvalue
         ranked_p_val = rankdata(p_val)
         qval = p_val * len(p_val) / ranked_p_val
         qval[qval > 1] = 1
@@ -181,7 +181,7 @@ class DEGeneSelector(SelectorMixin, BaseEstimator, metaclass=ABCMeta):
 
         self.gene_stats_ = np.array([log2fc, qval])
         logfc = np.reshape(log2fc, -1)
-        logfc = np.clip(logfc, -self.log2_fc_threshold, self.log2_fc_threshold, logfc)
+        logfc = np.clip(logfc, -self.log2_fc_threshold, self.log2_fc_threshold)
         return self
 
     def _get_support_mask(self):

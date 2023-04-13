@@ -87,7 +87,7 @@ class TMMNormalizer(TransformerMixin, BaseEstimator):
 
     def fit(self, X, y=None):
         self.total_counts = np.median(np.sum(X,axis=1))
-        self.scale_factor = self.__compute_scale_factors(X)
+        self.scale_factor = self.__compute_scale_factors(X).reshape(-1,1)
         return self
 
     def transform(self, X, y=None):
